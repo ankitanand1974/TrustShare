@@ -10,8 +10,8 @@ export default function NotConnected() {
 
             <h6>1. Install  <a href="https://metamask.io/download.html" rel="noopener noreferrer" target="_blank" className="btn btn-outline-primary">Meta-mask</a></h6>
             <h6>2. Create Your Account</h6>
-            <h6>3. Connect with Goerli test network</h6>
-            <h6>4. Get Some Free Ether by Ropsten Faucet</h6>
+            <h6>3. Connect with Goerli or sepolia test network</h6>
+            <h6>4. Get Some Free Ether by Faucet</h6>
             <hr />
             <img className="img-fluid h-50" src="img/ropston.jpg" alt="" />
 

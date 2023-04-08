@@ -22,17 +22,17 @@ module.exports = {
       gasPrice: 25000000000,
       network_id: "5",
     },
-    sepolia: {
-      networkCheckTimeout: 10000,
-      provider: function () {
-        return new HDWalletProvider(
-          process.env.MNEMONIC,
-          `wss://eth-sepolia.g.alchemy.com/v2/${process.env.SEPOLIA_API_KEY}`
-        );
-      },
-      gasPrice: 25000000000,
-      network_id: "11155111",
-    },
+    // sepolia: {
+    //   networkCheckTimeout: 10000,
+    //   provider: function () {
+    //     return new HDWalletProvider(
+    //       process.env.MNEMONIC,
+    //       `wss://eth-sepolia.g.alchemy.com/v2/${process.env.SEPOLIA_API_KEY}`
+    //     );
+    //   },
+    //   gasPrice: 25000000000,
+    //   network_id: "11155111",
+    // },
   },
   contracts_directory: "./src/contracts/",
   contracts_build_directory: "./src/abis/",

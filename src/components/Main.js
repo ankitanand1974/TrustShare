@@ -76,7 +76,7 @@ export default function Main(props) {
                           <td style={{ width: '8%' }}>{file.fileType}</td>
                           <td style={{ width: '8%' }}>{convertBytes(file.fileSize)}</td>
                           <td style={{ width: '12%' }}>{timeConverter(file.uploadTime)}</td>
-                          <td style={{ width: '12%' }}><a href={"https://ipfs.infura.io/ipfs/" + file.fileHash} rel="noopener noreferrer" target="_blank" className="btn btn-primary">View</a></td>
+                          <td style={{ width: '12%' }}><a href={"https://dweb.link/ipfs/" + file.fileHash} rel="noopener noreferrer" target="_blank" className="btn btn-primary">View</a></td>
                           <td style={{ width: '8%' }}>
                             <button onClick={() => { deleteFile0(file.fileId.toNumber()) }} className="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
                           </td>

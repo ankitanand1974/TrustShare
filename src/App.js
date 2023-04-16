@@ -17,6 +17,7 @@ import Navbar from "./components/Navbar";
 import Main from "./components/Main";
 import UploadFile from "./components/UploadFile";
 import NotConnected from "./components/NotConnected";
+import { ethers } from "ethers";
 
 const _ipfsClient = require("ipfs-http-client");
 // const ipfs = ipfsClient.create({
@@ -67,11 +68,12 @@ class App extends Component {
 
     const networkId = await web3.eth.net.getId();
     const ourStorageData = OurStorageDapp.networks[networkId];
+    console.log(ourStorageData)
 
     if (ourStorageData) {
       const ourStorageDapp = web3.eth.Contract(
         OurStorageDapp.abi,
-        ourStorageData.address
+        "0x4578574Eab2b98c1Be2c3638B31F766A0c10AD06"
       );
       this.setState({ ourStorageDapp });
       await this.loadMyAllFiles();
@@ -147,40 +149,76 @@ class App extends Component {
   }
 
   async uploadFile(_name, _des) {
-    this.setState({ loading: true });
-    // Add file to the IPFS
-    const ipfs = ipfsClient();
+    try {
+      this.setState({ loading: true });
+      const web3 = new Web3(window.ethereum);
+      const {ethereum} = window
+      if(ethereum){
+        const networkId = await web3.eth.net.getId();
+        const ourStorageData = OurStorageDapp.networks[networkId];
+        const ipfs = ipfsClient();
+        let result = await ipfs.add(this.state.buffer)
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract("0x4578574Eab2b98c1Be2c3638B31F766A0c10AD06", OurStorageDapp.abi, signer);
+        let txn = await contract.uploadFile(
+          result.path,
+          result.size,
+          this.state.fileType,
+          _name,
+          _des
+        )
+        
+        console.log("please wait")
+        await txn.wait();
+        
+      }
+      else{
+        console.log("ethereum not found")
+      }
+      
+    } catch(err){
+      console.log(err)
+    }
+    // const provider = new ethers.providers.Web3Provider(window.ethereum)
+    // await provider.send("eth_requestAccounts", []);
+    // this.setState({ loading: true });
+    // const signer = provider.getSigner()
+    // // Add file to the IPFS
+    // const ipfs = ipfsClient();
 
-    ipfs
-      .add(this.state.buffer)
-      .then((result) => {
-        this.state.ourStorageDapp.methods
-          .uploadFile(
-            result.path,
-            result.size,
-            this.state.fileType,
-            _name,
-            _des
-          )
-          .send({ from: this.state.account })
-          .on("transactionHash", (hash) => {
-            console.log("transactionHash", hash);
-          })
-          .on("receipt", (receipt) => {})
-          .on("confirmation", async (confirmationNumber, receipt) => {
-            await this.loadMyAllFiles();
-            this.setState({
-              loading: false,
-              buffer: "",
-              showFileDetails: false,
-            });
-          })
-          .on("error", (error, receipt) => {
-            console.log("error", error);
-            console.log("receipt", receipt);
-          });
-      })
-      .catch((error) => console.error(error));
+    // ipfs
+    //   .add(this.state.buffer)
+    //   .then((result) => {
+    //     console.log(result, "hello");
+    //     console.log(this.state.ourStorageDapp)
+    //     this.state.ourStorageDapp.methods
+    //       .uploadFile(
+      //       result.path,
+      //       result.size,
+      //       this.state.fileType,
+      //       _name,
+      //       _des
+      //     )
+      //     .send({ from: this.state.account })
+      //     .on("transactionHash", (hash) => {
+      //       console.log("transactionHash", hash);
+      //     })
+      //     .on("receipt", (receipt) => {})
+      //     .on("confirmation", async (confirmationNumber, receipt) => {
+      //       await this.loadMyAllFiles();
+      //       this.setState({
+      //         loading: false,
+      //         buffer: "",
+      //         showFileDetails: false,
+      //       });
+      //     })
+      //     .on("error", (error, receipt) => {
+      //       console.log("error", error);
+      //       console.log("receipt", receipt);
+      //     });
+      // })
+      // .catch((error) => console.error(error));
   }
 
   convertBytes(bytes) {

@@ -11,28 +11,28 @@ module.exports = {
       port: 7545,
       network_id: "*",
     },
-    goerli: {
-      networkCheckTimeout: 10000,
-      provider: function () {
-        return new HDWalletProvider(
-          process.env.MNEMONIC,
-          `wss://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_API_KEY}`
-        );
-      },
-      gasPrice: 25000000000,
-      network_id: "5",
-    },
-    // sepolia: {
+    // goerli: {
     //   networkCheckTimeout: 10000,
     //   provider: function () {
     //     return new HDWalletProvider(
     //       process.env.MNEMONIC,
-    //       `wss://eth-sepolia.g.alchemy.com/v2/${process.env.SEPOLIA_API_KEY}`
+    //       `wss://eth-goerli.g.alchemy.com/v2/${process.env.GOERLI_API_KEY}`
     //     );
     //   },
     //   gasPrice: 25000000000,
-    //   network_id: "11155111",
+    //   network_id: "5",
     // },
+    sepolia: {
+      networkCheckTimeout: 10000,
+      provider: function () {
+        return new HDWalletProvider(
+          process.env.MNEMONIC,
+          `wss://eth-sepolia.g.alchemy.com/v2/${process.env.SEPOLIA_API_KEY}`
+        );
+      },
+      gasPrice: 25000000000,
+      network_id: "11155111",
+    },
   },
   contracts_directory: "./src/contracts/",
   contracts_build_directory: "./src/abis/",

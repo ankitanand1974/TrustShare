@@ -68,13 +68,14 @@ class App extends Component {
 
     const networkId = await web3.eth.net.getId();
     const ourStorageData = OurStorageDapp.networks[networkId];
-    console.log(ourStorageData)
+    console.log(ourStorageData, "HELLO THIS IS TEST")
 
     if (ourStorageData) {
       const ourStorageDapp = web3.eth.Contract(
         OurStorageDapp.abi,
-        "0x4578574Eab2b98c1Be2c3638B31F766A0c10AD06"
+        "0x711f2f5cAC3e0273cEA1a3D5AE597Eda3bb2D4ac"
       );
+      console.log(ourStorageData, "HELLO THIS IS TEST 2")
       this.setState({ ourStorageDapp });
       await this.loadMyAllFiles();
       this.setState({ loading: false });
@@ -89,7 +90,9 @@ class App extends Component {
     });
     const totalFilesCount = await this.state.ourStorageDapp.methods
       .getTotalFileCount()
+      
       .call();
+      console.log(totalFilesCount, "HELLO THIS IS TEST 3")
 
     for (let i = totalFilesCount; i >= 1; i--) {
       let file = await this.state.ourStorageDapp.methods.getFileOf(i).call();
@@ -160,7 +163,7 @@ class App extends Component {
         let result = await ipfs.add(this.state.buffer)
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner()
-        const contract = new ethers.Contract("0x4578574Eab2b98c1Be2c3638B31F766A0c10AD06", OurStorageDapp.abi, signer);
+        const contract = new ethers.Contract("0x711f2f5cAC3e0273cEA1a3D5AE597Eda3bb2D4ac", OurStorageDapp.abi, signer);
         let txn = await contract.uploadFile(
           result.path,
           result.size,

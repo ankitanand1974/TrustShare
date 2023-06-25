@@ -20,11 +20,6 @@ import NotConnected from "./components/NotConnected";
 import { ethers } from "ethers";
 
 const _ipfsClient = require("ipfs-http-client");
-// const ipfs = ipfsClient.create({
-//   host: "ipfs.infura.io",
-//   port: 5001,
-//   protocol: "https",
-//});
 const projectId = "2O90tZzocnBNd2ZdCSTHQV7m8TE";
 const projectSecret = "403dc5b56b8383268dc24ae961e57771";
 const auth =
@@ -183,45 +178,6 @@ class App extends Component {
     } catch(err){
       console.log(err)
     }
-    // const provider = new ethers.providers.Web3Provider(window.ethereum)
-    // await provider.send("eth_requestAccounts", []);
-    // this.setState({ loading: true });
-    // const signer = provider.getSigner()
-    // // Add file to the IPFS
-    // const ipfs = ipfsClient();
-
-    // ipfs
-    //   .add(this.state.buffer)
-    //   .then((result) => {
-    //     console.log(result, "hello");
-    //     console.log(this.state.ourStorageDapp)
-    //     this.state.ourStorageDapp.methods
-    //       .uploadFile(
-      //       result.path,
-      //       result.size,
-      //       this.state.fileType,
-      //       _name,
-      //       _des
-      //     )
-      //     .send({ from: this.state.account })
-      //     .on("transactionHash", (hash) => {
-      //       console.log("transactionHash", hash);
-      //     })
-      //     .on("receipt", (receipt) => {})
-      //     .on("confirmation", async (confirmationNumber, receipt) => {
-      //       await this.loadMyAllFiles();
-      //       this.setState({
-      //         loading: false,
-      //         buffer: "",
-      //         showFileDetails: false,
-      //       });
-      //     })
-      //     .on("error", (error, receipt) => {
-      //       console.log("error", error);
-      //       console.log("receipt", receipt);
-      //     });
-      // })
-      // .catch((error) => console.error(error));
   }
 
   convertBytes(bytes) {

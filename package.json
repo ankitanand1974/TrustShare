@@ -28,7 +28,7 @@
     "truffle": "5.0.5",
     "web3": "^1.0.0-beta.55"
   },
-  "homepage": "http://abhithory.github.io/Our_Storage_Dapp",
+  "homepage": "http://ankitanand1974.github.io/TrustShare",
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",

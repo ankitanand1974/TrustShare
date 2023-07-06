@@ -1,10 +1,9 @@
-import React from 'react';
-import {
-  Link
-} from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 
 export default function Main(props) {
   const { allFiles, deleteFile } = props;
+  const [copied, setCopied] = useState(false);
 
   const convertBytes = (bytes) => {
     var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -38,6 +37,16 @@ export default function Main(props) {
     }
   }
 
+  function copyURL(fileHash) {
+    navigator.clipboard.writeText("https://dweb.link/ipfs/" + fileHash)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => {
+          setCopied(false);
+        }, 2000);
+      })
+      alert("The URL for sharing the file has been copied to the clipboard, ready to be shared effortlessly.");
+  }
   return (
     <div className="container text-center  mt-3 mb-5">
       <Link to="uploadfiles">
@@ -58,6 +67,7 @@ export default function Main(props) {
                     <th scope="col" style={{ width: '8%' }}>size</th>
                     <th scope="col" style={{ width: '12%' }}>date</th>
                     <th scope="col" style={{ width: '12%' }}>View File</th>
+                    <th scope="col" style={{ width: '9%' }}>Share</th>
                     <th scope="col" style={{ width: '8%' }}>Delete</th>
                   </tr>
                 </thead>
@@ -77,6 +87,9 @@ export default function Main(props) {
                           <td style={{ width: '8%' }}>{convertBytes(file.fileSize)}</td>
                           <td style={{ width: '12%' }}>{timeConverter(file.uploadTime)}</td>
                           <td style={{ width: '12%' }}><a href={"https://dweb.link/ipfs/" + file.fileHash} rel="noopener noreferrer" target="_blank" className="btn btn-primary">View</a></td>
+                          <td style={{ width: '8%' }}>
+                            <button onClick={() => { copyURL(file.fileHash)}} className="btn btn-outline-success"><i class="bi bi-share"></i></button>
+                          </td>
                           <td style={{ width: '8%' }}>
                             <button onClick={() => { deleteFile0(file.fileId.toNumber()) }} className="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
                           </td>
